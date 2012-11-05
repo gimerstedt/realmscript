@@ -71,7 +71,7 @@ clipboard = ok.
 goto tk
 
 F7::
-clipboard = there's probably some fame thing happening here, tp and find out.
+clipboard = if you want to lvl up/get fame, tp to me and try to stay in one spot to allow godlands to repopulate, thanks.
 goto ek
 
 F8::
@@ -142,7 +142,7 @@ return
 swap:
 MouseGetPos, mousePosX, mousePosY
 WinGetPos, , , winSizeX, winSizeY, A
-ImageSearch, imageLocX, imageLocY, 0, 0, %winSizeX%, %winSizeY%, attimg.png
-MouseClick, Left, imageLocX + (44 * slot), imageLocY + 150, 2
+ImageSearch, imageLocX, imageLocY, 0, 0, %winSizeX%, %winSizeY%, searchimage.png
+MouseClick, Left, imageLocX + (44 * slot) + 30, imageLocY - 20, 2
 MouseMove, mousePosX, mousePosY
 return
