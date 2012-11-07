@@ -123,6 +123,15 @@ Send {space}
 Blockinput, off
 Return
 
+^r::
+Send {Esc}
+Sleep 25
+MouseGetPos, mousePosX, mousePosY
+WinGetPos, , , winSizeX, winSizeY, A
+ImageSearch, imageLocX, imageLocY, 0, 0, %winSizeX%, %winSizeY%, charsel.png
+MouseClick, Left, imageLocX, imageLocY, 1
+MouseMove, mousePosX, mousePosY
+
 ek:
 Blockinput, on
 Send {Enter}
