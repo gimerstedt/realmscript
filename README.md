@@ -14,5 +14,8 @@ Features:
 * Swap hotkeys (only works @ low res and with contextual click, because i want it to)
 * Shift+scroll wheel scrolls chat log
 * /tp is converted to /teleport 
+* Select all slots when trading
+* Withdraw/Deposit all items from vault
+* Go to character/server select anywhere
 
 Credit to BMJ for some stuff from QuickSpeech and to TKGP for the item swap

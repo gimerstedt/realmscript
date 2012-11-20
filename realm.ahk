@@ -199,6 +199,65 @@ Loop 2
 MouseMove, mousePosX, mousePosY
 return
 
+; pick up all 8 slots
+^w::
+SendMode Event
+MouseGetPos, mousePosX, mousePosY
+WinGetPos, , , winSizeX, winSizeY, A
+ImageSearch, imageLocX, imageLocY, 0, 0, %winSizeX%, %winSizeY%, img\searchimage.png
+imageLocX += 25
+imageLocY += 55
+Xinc = 0
+Yinc = 0
+Loop 2
+{
+	Loop 4
+	{
+		MouseMove, imageLocX + Xinc, imageLocY + Yinc
+		SendEvent {LButton Down}
+		MouseMove, imageLocX + Xinc + 3, imageLocY + Yinc + 3
+		Sleep 260
+		MouseMove, imageLocX + Xinc, imageLocY + Yinc - 125
+		SendEvent {LButton Up}
+		Sleep 260
+		Xinc += 44
+	}
+	Xinc = 0
+	Yinc += 50
+}
+MouseMove, mousePosX, mousePosY
+Return
+
+; drop all items in chest
+^d::
+SendMode Event
+MouseGetPos, mousePosX, mousePosY
+WinGetPos, , , winSizeX, winSizeY, A
+ImageSearch, imageLocX, imageLocY, 0, 0, %winSizeX%, %winSizeY%, img\searchimage.png
+imageLocX += 25
+imageLocY -= 70
+MouseMove, imageLocX, imageLocY
+Xinc = 0
+Yinc = 0
+Loop 2
+{
+	Loop 4
+	{
+		MouseMove, imageLocX + Xinc, imageLocY + Yinc
+		SendEvent {LButton Down}
+		MouseMove, imageLocX + Xinc + 3, imageLocY + Yinc + 3
+		Sleep 260
+		MouseMove, imageLocX + Xinc, imageLocY + Yinc + 125
+		SendEvent {LButton Up}
+		Sleep 260
+		Xinc += 44
+	}
+	Xinc = 0
+	Yinc += 50
+}
+MouseMove, mousePosX, mousePosY
+Return
+
 ; sends clipboard to the chat using the enter key
 ek:
 Blockinput, on
