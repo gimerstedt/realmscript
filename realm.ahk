@@ -165,11 +165,11 @@ MouseClick, Left, imageLocX, imageLocY, 1
 MouseClick, Left, imageLocX-240, imageLocY, 1 ; back to home is bugged
 Loop
 {
-	PixelGetColor, color, imageLocX-328, imageLocY+20, RGB
-	if color = 0xFFFFFF
-		break
-	else
+	ImageSearch, imageLocXa, imageLocYb, 0, 0, %winSizeX%, %winSizeY%, img\coin.png
+	if ErrorLevel = 1
 		continue
+	else
+		break
 }
 MouseClick, Left, imageLocX-328, imageLocY+20, 1
 MouseClick, Left, imageLocX-328, imageLocY+20, 1
