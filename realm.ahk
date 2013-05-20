@@ -35,32 +35,20 @@ WinNotActive()
 	}
 }
 
-; send shift lclick on rclick and if lbutton was down when rclick happened, sets it to down again as it resets
+; teleports to tptarget (set with ^n)
 RButton::
-Send +{LButton}
-	GetKeyState, LB, LButton, P
-	if LB = D
-		Send {LButton down}
-Return
+clipboard = /teleport %tptarget%
+goto ek
 
 ; sends rclick when ctrl+rclick is sent to get the flash context menu
 ^+RButton::
 Click right
 Return
 
-; sets clipboard and sends off to ek (function to send clipboard using enter key)
+; sets clipboard and sends off to ek/tk (function to send clipboard using enter/tab key)
 F1::
 clipboard = thanks.
 goto ek
-
-; sets clipboard and sends off to tk (function to send clipboard using tab key)
-Numpad4::
-clipboard = thanks.
-goto tk
-
-Numpad3::
-clipboard = i'm trying to play, please message questions, and whatever else you may have, to me on the forums instead.
-goto tk
 
 F4::
 clipboard = yes.
@@ -74,14 +62,6 @@ F6::
 clipboard = ok.
 goto tk
 
-F7::
-clipboard = if you want to lvl up/get fame, tp to me and try to stay in one spot to allow godlands to repopulate, thanks.
-goto ek
-
-F8::
-clipboard = ok.
-goto tk
-
 Numpad2::
 clipboard = :)
 goto tk
@@ -91,7 +71,7 @@ clipboard = /pause
 goto ek
 
 ^t::
-clipboard = /tutorial
+clipboard = /nexustutorial
 goto ek
 
 ; ignores the person that shows up when you press tab (last person that /tell you)
@@ -105,17 +85,34 @@ Return
 ; set a teleport target
 ^n::InputBox, tptarget, Teleport target, Please enter a person to teleport to:
 
-; teleport to the target set with ctrl+n
+; teleport to the target set with ^n
 ^f::
 clipboard = /teleport %tptarget%
 goto ek
 
+; set a trading message
+F7::InputBox, tradingmsg, Trading message, Please enter a trading message:
+
+; send trading message
+F8::
+if endoftrading = 0
+{
+clipboard = /yell %tradingmsg%
+endoftrading = 1
+}
+else
+{
+clipboard = /yell %tradingmsg%!
+endoftrading = 0
+}
+goto ek
+
 ; double click on slot 7 in the inventory (0, 1, 2, 3 in the bottom row)
-Numpad5::
+xbutton2::
 slot = 2
 goto swap
 
-Numpad6::
+xbutton1::
 slot = 3
 goto swap
 
@@ -168,14 +165,14 @@ MouseClick, Left, imageLocX, imageLocY, 1
 MouseClick, Left, imageLocX-240, imageLocY, 1 ; back to home is bugged
 Loop
 {
-	PixelGetColor, color, imageLocX-305, imageLocY, RGB
+	PixelGetColor, color, imageLocX-328, imageLocY+20, RGB
 	if color = 0xFFFFFF
 		break
 	else
 		continue
 }
-MouseClick, Left, imageLocX-300, imageLocY, 1
-MouseClick, Left, imageLocX-300, imageLocY, 1
+MouseClick, Left, imageLocX-328, imageLocY+20, 1
+MouseClick, Left, imageLocX-328, imageLocY+20, 1
 MouseMove, mousePosX, mousePosY
 Return
 
@@ -256,6 +253,42 @@ Loop 2
 	Yinc += 50
 }
 MouseMove, mousePosX, mousePosY
+Return
+
+; toggle chat
+^F1::
+MouseGetPos, mousePosX, mousePosY
+WinGetPos, , , winSizeX, winSizeY, A
+Send {Esc}
+Loop
+{
+	ImageSearch, imageLocX, imageLocY, 0, 0, %winSizeX%, %winSizeY%, img\charsel.png
+	if ErrorLevel = 1
+		continue
+	else
+		break
+}
+MouseClick, Left, imagelocx-400, imagelocy-460
+MouseClick, Left, imagelocx - 560, imagelocy-240
+Send {Esc}
+Return
+
+; toggle trade request panel
+^F2::
+MouseGetPos, mousePosX, mousePosY
+WinGetPos, , , winSizeX, winSizeY, A
+Send {Esc}
+Loop
+{
+	ImageSearch, imageLocX, imageLocY, 0, 0, %winSizeX%, %winSizeY%, img\charsel.png
+	if ErrorLevel = 1
+		continue
+	else
+		break
+}
+MouseClick, Left, imagelocx-240, imagelocy-470
+Mouseclick, Left, imagelocx-560, imagelocy-280
+Send {Esc}
 Return
 
 ; sends clipboard to the chat using the enter key
